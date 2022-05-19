@@ -20,12 +20,9 @@ void encolar_nodo(Nodo *nodo, Cola *c){
         return;
     }
 
-    nodo->prev = NULL;
-    nodo->sig = c->primero;
-
-    c->primero->prev = nodo;
-
-    c->primero = nodo;
+    c->ultimo->sig = nodo;
+    nodo->prev = c->ultimo;
+    c->ultimo = nodo;    
 
     return;
 
@@ -55,21 +52,21 @@ void encolar(char *data, Cola* c){
 char *desencolar(Cola *c){
     if( c->primero == NULL ) return "Cola vacia";
 
-    Nodo* eliminado = c->ultimo;
+    Nodo* eliminado = c->primero;
     char *data = eliminado->dato;
 
-    if( eliminado->prev ){
-        eliminado->prev->sig = eliminado->sig;
-    }
-    else{
-        c->primero = eliminado->sig;
-    }
+    // printf("Desencolando %s...\n", eliminado->dato);
 
     if( eliminado->sig ){
-        eliminado->sig->prev = eliminado->prev;
+
+        eliminado->sig->prev = NULL;
+        c->primero = eliminado->sig;
+
     }
     else{
-        c->ultimo = eliminado->prev;
+
+        c->primero = c->ultimo = NULL;
+
     }
 
     free( eliminado );

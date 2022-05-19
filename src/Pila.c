@@ -29,14 +29,20 @@ void apilar_nodo(NodoPila *nodo, Pila *p){
 
 
 char *desapilar(Pila *p){
-    if( p->cima == NULL ) return "Pila vacia";
-    
+    if( p->fondo == NULL ) return NULL;
+
     NodoPila *eliminado = p->cima;
     char *data = eliminado->dato;
 
-    printf("Desapilando... %s\n", data);
+    // printf("Desapilando... %s\n", data);
 
-    p->cima = p->cima->sig;
+    if( eliminado->sig ){
+        p->cima = eliminado->sig;
+    }
+    else{
+        p->cima = p->fondo = NULL;
+    }
+
 
     free( eliminado );
 
@@ -46,15 +52,15 @@ char *desapilar(Pila *p){
 void mostrarPila(Pila *p){
     if( p->fondo == NULL ) return;
 
-    printf("Cima: %s\nFondo: %s\n", p->cima->dato, p->fondo->dato);
+    printf("Cima: %s\nFondo: %s\n\n", p->cima->dato, p->fondo->dato);
 
     NodoPila *actual = p->cima;
 
     while( actual ){
-        printf(" %s ", actual->dato);
+        printf("| %s |\n", actual->dato);
         actual = actual->sig;
     }
-
+    printf("_____");
     printf("\n----------------------\n");
 
 }
