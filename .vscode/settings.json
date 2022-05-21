@@ -1,5 +1,6 @@
 {
     "files.associations": {
-        "nodo.h": "c"
+        "nodo.h": "c",
+        "cstdio": "cpp"
     }
 }

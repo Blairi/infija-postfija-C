@@ -1,9 +1,9 @@
-#include "Cola.h"
+#include "../include/Cola.h"
 
 Cola* crearCola(){
     Cola* c = (Cola*)malloc( sizeof( struct Cola ) );
     c->primero = c->ultimo = NULL;
-
+    c->len = 0;
     return c;
 }
 
@@ -12,6 +12,8 @@ void encolar_nodo(Nodo *nodo, Cola *c){
     if( c == NULL ) return;
 
     // printf("Dato a encolar: %s\n", nodo->dato);
+    
+    c->len++;
 
     if( c->primero == NULL ){
 
@@ -56,6 +58,8 @@ char *desencolar(Cola *c){
     char *data = eliminado->dato;
 
     // printf("Desencolando %s...\n", eliminado->dato);
+    
+    c->len--;
 
     if( eliminado->sig ){
 
@@ -66,6 +70,7 @@ char *desencolar(Cola *c){
     else{
 
         c->primero = c->ultimo = NULL;
+        c->len = 0;
 
     }
 
@@ -75,10 +80,14 @@ char *desencolar(Cola *c){
 }
 
 
+bool cola_vacia(Cola *c){
+    return c->len == 0;
+}
+
 void mostrar(Cola *c){
     if( c->primero == NULL ) return;
 
-    printf("Primero: %s\nUltimo: %s\n", c->primero->dato, c->ultimo->dato);
+    printf("Primero: %s\nUltimo: %s\nLongitud: %d\n", c->primero->dato, c->ultimo->dato, c->len);
 
     Nodo* actual = c->primero;
 

@@ -1,5 +1,6 @@
-#include "Pila.h"
-#include "NodoPila.h"
+#include "../include/Pila.h"
+
+#include "../include/NodoPila.h"
 
 Pila *crearPila(){
     Pila *p = (Pila*)malloc( sizeof( struct Pila ) );
@@ -13,6 +14,8 @@ Pila *crearPila(){
 void apilar_nodo(NodoPila *nodo, Pila *p){
 
     if( p == NULL ) return;
+
+    p->len ++;
 
     if( p->fondo == NULL ){
 
@@ -38,21 +41,29 @@ char *desapilar(Pila *p){
 
     if( eliminado->sig ){
         p->cima = eliminado->sig;
+        p->len--;
     }
     else{
         p->cima = p->fondo = NULL;
+        p->len = 0;
     }
-
 
     free( eliminado );
 
+    return data;
+
+}
+
+
+bool esvacia(Pila *p){
+    return p->fondo == NULL;
 }
 
 
 void mostrarPila(Pila *p){
     if( p->fondo == NULL ) return;
 
-    printf("Cima: %s\nFondo: %s\n\n", p->cima->dato, p->fondo->dato);
+    printf("Cima: %s\nFondo: %s\nLongitud: %d\n", p->cima->dato, p->fondo->dato, p->len);
 
     NodoPila *actual = p->cima;
 
