@@ -54,67 +54,62 @@ void probarPila(){
 }
 
 void probarColaDL(){
-	/* typedef char cadenaCaracteres[12]; */ 
-	/* cadenaCaracteres caracteres[100]; */ 
+	typedef char cadenaCaracteres[12];
+	cadenaCaracteres caracteres[100];
 
 	Cola *cola = crearCola();
 
-	/* int len; */
-	/* printf("¿Cuantos elementos tiene tu operacion? "); */
-	/* scanf("%d", &len); */ 
+	int len;
+	printf("¿Cuantos elementos tiene tu operacion? ");
+	scanf("%d", &len); 
 	
-	/* for (int i = 0; i < len; i++){ */
+	for (int i = 0; i < len; i++){
 
-	/* 	printf("Ingresa el elemento %d: ", i + 1); */
-	/* 	scanf("%s", caracteres[i]); */
+		printf("Ingresa el elemento %d: ", i + 1);
+		scanf("%s", caracteres[i]);
 		
-	/* 	Nodo *nodo = crearNodo(caracteres[i], NULL, NULL); */
+		Nodo *nodo = crearNodo(caracteres[i], NULL, NULL);
 		
-	/* 	encolar_nodo(nodo, cola); */
-	/* } */ 
+		encolar_nodo(nodo, cola);
+	} 
 
-	Nodo *n1 = crearNodo("(", NULL, NULL);
-	Nodo *n2 = crearNodo("6", NULL, NULL);
-	Nodo *n3 = crearNodo("+", NULL, NULL);
-	Nodo *n4 = crearNodo("2", NULL, NULL);
-	Nodo *n5 = crearNodo(")", NULL, NULL);
-	Nodo *n6 = crearNodo("*", NULL, NULL);
-	Nodo *n7 = crearNodo("3", NULL, NULL);
-	Nodo *n8 = crearNodo("/", NULL, NULL);
-	Nodo *n9 = crearNodo("2", NULL, NULL);
-	Nodo *n10 = crearNodo("^", NULL, NULL);
-	Nodo *n11 = crearNodo("2", NULL, NULL);
-	Nodo *n12 = crearNodo("-", NULL, NULL);
-	Nodo *n13 = crearNodo("4", NULL, NULL);
-	encolar_nodo(n1, cola);
-	encolar_nodo(n2, cola);
-	encolar_nodo(n3, cola);
-	encolar_nodo(n4, cola);
-	encolar_nodo(n5, cola);
-	encolar_nodo(n6, cola);
-	encolar_nodo(n7, cola);
-	encolar_nodo(n8, cola);
-	encolar_nodo(n9, cola);
-	encolar_nodo(n10, cola);
-	encolar_nodo(n11, cola);
-	encolar_nodo(n12, cola);
-	encolar_nodo(n13, cola);
-	// mostrar(cola);
+	/* Nodo *n1 = crearNodo("(", NULL, NULL); */
+	/* Nodo *n2 = crearNodo("6", NULL, NULL); */
+	/* Nodo *n3 = crearNodo("+", NULL, NULL); */
+	/* Nodo *n4 = crearNodo("2", NULL, NULL); */
+	/* Nodo *n5 = crearNodo(")", NULL, NULL); */
+	/* Nodo *n6 = crearNodo("*", NULL, NULL); */
+	/* Nodo *n7 = crearNodo("3", NULL, NULL); */
+	/* Nodo *n8 = crearNodo("/", NULL, NULL); */
+	/* Nodo *n9 = crearNodo("2", NULL, NULL); */
+	/* Nodo *n10 = crearNodo("^", NULL, NULL); */
+	/* Nodo *n11 = crearNodo("2", NULL, NULL); */
+	/* Nodo *n12 = crearNodo("-", NULL, NULL); */
+	/* Nodo *n13 = crearNodo("4", NULL, NULL); */
+	/* encolar_nodo(n1, cola); */
+	/* encolar_nodo(n2, cola); */
+	/* encolar_nodo(n3, cola); */
+	/* encolar_nodo(n4, cola); */
+	/* encolar_nodo(n5, cola); */
+	/* encolar_nodo(n6, cola); */
+	/* encolar_nodo(n7, cola); */
+	/* encolar_nodo(n8, cola); */
+	/* encolar_nodo(n9, cola); */
+	/* encolar_nodo(n10, cola); */
+	/* encolar_nodo(n11, cola); */
+	/* encolar_nodo(n12, cola); */
+	/* encolar_nodo(n13, cola); */
+	mostrar_infija(cola);
 
 	Cola *cola_postfija = crearCola();
 	Pila *pila = crearPila();
 	
-	char *potencia = "^";
-	char *multiplicacion = "*";
-	char *division = "/";
-	char *mas = "+";
-	char *menos = "-";
 	char *parentesis_izq = "(";
 	char *parentesis_der = ")";
 
 	char *operador;
 
-	for (int i = 0; i < 13; i++){
+	for (int i = 0; i < len; i++){
 
 		char *actual = desencolar(cola);
 		if( esOperador( actual ) ){
@@ -166,7 +161,7 @@ void probarColaDL(){
 		desapilar(pila);
 	}
 
-	mostrar(cola_postfija);
+	mostrar_postfija(cola_postfija);
 	mostrarPila(pila);
 	
 }

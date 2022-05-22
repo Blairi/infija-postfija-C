@@ -19,6 +19,8 @@ void encolar (char *data, Cola* c);
 void encolar_nodo(Nodo *nodo, Cola *c);
 char* desencolar(Cola *c);
 void mostrar(Cola *c);
+void mostrar_postfija(Cola *c);
+void mostrar_infija(Cola *c);
 bool cola_vacia(Cola *c);
 
 #endif

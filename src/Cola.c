@@ -1,4 +1,5 @@
 #include "../include/Cola.h"
+#include <stdio.h>
 
 Cola* crearCola(){
     Cola* c = (Cola*)malloc( sizeof( struct Cola ) );
@@ -100,4 +101,38 @@ void mostrar(Cola *c){
 
     printf("\n------------------\n\n");
 
+}
+
+
+void mostrar_postfija(Cola *c){
+    if( c->primero == NULL ) return;
+
+    printf("\nNotación Postfija:\n");
+
+    Nodo *actual = c->primero;
+
+    printf("[");
+    while (actual) {
+        printf(" %s ", actual->dato);
+        actual = actual->sig;
+    }
+    printf("]");
+    printf("\n--------------------\n\n");
+}
+
+
+void mostrar_infija(Cola *c){
+    if( c->primero == NULL ) return;
+
+    printf("\nNotación Infija:\n");
+
+    Nodo *actual = c->primero;
+
+    printf("[");
+    while (actual) {
+        printf(" %s ", actual->dato);
+        actual = actual->sig;
+    }
+    printf("]");
+    printf("\n--------------------\n\n");
 }
