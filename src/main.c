@@ -15,13 +15,15 @@
 
 void probarColaDL();
 void probarPila();
-bool presedencia(char *a, char *b);
+int presedencia(char *caracter);
+bool esOperador(char *caracter);
 
 int main(){
 
 	system("clear");
 
 	probarColaDL();
+	//probarPila();
 	
 
 	return (0);
@@ -30,39 +32,46 @@ int main(){
 void probarPila(){
 	Pila *pila = crearPila();
 	NodoPila *nodo1 = crearNodoPila("fondo");
-	// NodoPila *nodo2 = crearNodoPila("medio");
-	// NodoPila *nodo3 = crearNodoPila("cima");
+	NodoPila *nodo2 = crearNodoPila("medio");
+	NodoPila *nodo3 = crearNodoPila("cima");
 
 	apilar_nodo(nodo1, pila);
-	// apilar_nodo(nodo2, pila);
-	// apilar_nodo(nodo3, pila);
+	apilar_nodo(nodo2, pila);
+	apilar_nodo(nodo3, pila);
 
 	mostrarPila(pila);
 
 	desapilar(pila);
+	desapilar(pila);
+	desapilar(pila);
 
 	mostrarPila(pila);
+	
+	if( esvacia(pila) ){
+		printf("es vacia\n");
+	}
+
 }
 
 void probarColaDL(){
-	// typedef char cadenaCaracteres[12];
-    // cadenaCaracteres caracteres[100];
+	/* typedef char cadenaCaracteres[12]; */ 
+	/* cadenaCaracteres caracteres[100]; */ 
 
 	Cola *cola = crearCola();
 
-	// int len;
-	// printf("¿Cuantos elementos tiene tu operacion? ");
-	// scanf("%d", &len);
+	/* int len; */
+	/* printf("¿Cuantos elementos tiene tu operacion? "); */
+	/* scanf("%d", &len); */ 
 	
-	// for (int i = 0; i < len; i++){
+	/* for (int i = 0; i < len; i++){ */
 
-	// 	printf("Ingresa el elemento %d: ", i + 1);
-	// 	scanf("%s", caracteres[i]);
+	/* 	printf("Ingresa el elemento %d: ", i + 1); */
+	/* 	scanf("%s", caracteres[i]); */
 		
-	// 	Nodo *nodo = crearNodo(caracteres[i], NULL, NULL);
+	/* 	Nodo *nodo = crearNodo(caracteres[i], NULL, NULL); */
 		
-	// 	encolar_nodo(nodo, cola);
-	// }
+	/* 	encolar_nodo(nodo, cola); */
+	/* } */ 
 
 	Nodo *n1 = crearNodo("(", NULL, NULL);
 	Nodo *n2 = crearNodo("6", NULL, NULL);
@@ -103,56 +112,59 @@ void probarColaDL(){
 	char *parentesis_izq = "(";
 	char *parentesis_der = ")";
 
-	for (int i = 0; i < 13; i++){	
-		char *actual = desencolar(cola);
+	char *operador;
 
-		if( strcmp(actual, potencia) != 0 && 
-				strcmp(actual, multiplicacion) != 0 && 
-				strcmp(actual, multiplicacion) != 0 &&
-				strcmp(actual, division) != 0       &&
-				strcmp(actual, mas) != 0            &&
-				strcmp(actual, menos) != 0          &&
-				strcmp(actual, parentesis_izq) != 0 &&
-				strcmp(actual, parentesis_der) != 0){
+	for (int i = 0; i < 13; i++){
+
+		char *actual = desencolar(cola);
+		if( esOperador( actual ) ){
+			
+			while( !esvacia(pila) && 
+					   strcmp(operador = pila->cima->dato, parentesis_izq) != 0 &&
+						 presedencia(actual) <= presedencia(operador)){
+				
+				Nodo *nodoCola = crearNodo(operador, NULL, NULL);
+				encolar_nodo(nodoCola, cola_postfija);
+				desapilar(pila);
+
+			}
+
+			NodoPila *nodoPila = crearNodoPila(actual);
+			apilar_nodo(nodoPila, pila);
+
+		}
+
+		else if( strcmp(actual, parentesis_izq) == 0 ){
+			NodoPila *nodoPila = crearNodoPila(actual);
+			apilar_nodo(nodoPila, pila);
+		}
+		
+		else if( strcmp(actual, parentesis_der) == 0 ){
+			
+			while( strcmp(operador = pila->cima->dato, parentesis_izq) != 0 ){
+				Nodo *nodoCola = crearNodo(operador, NULL, NULL);
+				encolar_nodo(nodoCola, cola_postfija);
+				desapilar(pila);
+			}
+
+		}
+
+		else{
 			Nodo *nodoCola = crearNodo(actual, NULL, NULL);
 			encolar_nodo(nodoCola, cola_postfija);
 		}
-		else{
-			if( strcmp(actual, parentesis_der)  == 0){
-				char *aux = desapilar(pila);
-				while( strcmp(aux, parentesis_izq) != 0 ){
-					Nodo *nodoCola = crearNodo(aux, NULL, NULL);
-					encolar_nodo(nodoCola, cola_postfija);
-					aux = desapilar(pila);
-				}
-			}
-			else{
-				if( strcmp(division, actual) == 0 && strcmp(pila->cima->dato, multiplicacion) == 0){
-					Nodo *nodoCola = crearNodo(multiplicacion, NULL, NULL);
-					encolar_nodo(nodoCola, cola_postfija);
-					desapilar(pila);
-				}
 
-				if( strcmp(actual, menos) == 0 && strcmp(pila->cima->dato, potencia) == 0 ){
-					
-					char *aux = desapilar(pila);
-					while( aux != NULL ){
-						Nodo *nodoCola = crearNodo(aux, NULL, NULL);
-						encolar_nodo(nodoCola, cola_postfija);
-						aux = desapilar(pila);
-					}
-				}
-				
-				NodoPila *nodoPila = crearNodoPila(actual);
-				apilar_nodo(nodoPila, pila);
-				
-			}
-
-		}
 	}
 
-	Nodo *nodoCola = crearNodo(desapilar(pila), NULL, NULL);
-	encolar_nodo(nodoCola, cola_postfija);
+	while (!esvacia(pila)) {
+		
+		if( strcmp(pila->cima->dato, parentesis_izq) != 0 ){
+			Nodo *nodoCola = crearNodo(pila->cima->dato, NULL, NULL);
+			encolar_nodo(nodoCola, cola_postfija);
+		}
+
+		desapilar(pila);
+	}
 
 	mostrar(cola_postfija);
 	mostrarPila(pila);
@@ -160,7 +172,13 @@ void probarColaDL(){
 }
 
 
-bool presedencia(char *a, char *b){
+
+bool esOperador(char *caracter){
+	return presedencia(caracter) != 0;
+}
+
+
+int presedencia(char *caracter){
 
 	char *potencia = "^";
 	char *multiplicacion = "*";
@@ -168,27 +186,9 @@ bool presedencia(char *a, char *b){
 	char *mas = "+";
 	char *menos = "-";
 
-	int p1, p2;
+	if( strcmp(caracter, mas) == 0 || strcmp(caracter, menos) == 0 ) return 1;
+	else if( strcmp(caracter, multiplicacion) == 0 || strcmp(caracter, division) == 0 ) return 2;
+	else if( strcmp(caracter, potencia) == 0 ) return 3;
+	else return 0;
 
-	if( strcmp(a, potencia) == 0  ){
-		p1 = 2;
-	}
-	if( strcmp(a, multiplicacion) == 0 || strcmp(a, division) == 0 ){
-		p1 = 1;
-	}
-	if( strcmp(a, mas) == 0 || strcmp(a, menos) == 0 ){
-		p1 = 0;
-	}
-
-	if( strcmp(b, potencia) == 0  ){
-		p2 = 2;
-	}
-	if( strcmp(b, multiplicacion) == 0 || strcmp(b, division) == 0 ){
-		p2 = 1;
-	}
-	if( strcmp(b, mas) == 0 || strcmp(b, menos) == 0 ){
-		p2 = 0;
-	}
-
-  return p2 > p1;
 }

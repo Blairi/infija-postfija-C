@@ -56,7 +56,7 @@ char *desapilar(Pila *p){
 
 
 bool esvacia(Pila *p){
-    return p->fondo == NULL;
+    return p->len == 0;
 }
 
 
