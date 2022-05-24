@@ -10,7 +10,7 @@
 @return nuevoNodo: Retorna un nuevo nodo con la información 
 
 */
-NodoPila *crearNodoPila(char *data){
+NodoPila *crearNodoPila(char *data){ //O=1
 
     NodoPila *nuevoNodo = (NodoPila*)malloc( sizeof( struct NodoPila ) );
 
