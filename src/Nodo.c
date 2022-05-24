@@ -13,7 +13,7 @@
 
 */
 
-Nodo* crearNodo(char *data, Nodo *prev, Nodo *sig){
+Nodo* crearNodo(char *data, Nodo *prev, Nodo *sig){ //O=1
 
     Nodo* nuevoNodo = (Nodo*)malloc( sizeof( struct Nodo ) );
 
