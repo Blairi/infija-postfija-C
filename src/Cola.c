@@ -15,7 +15,7 @@
 @return: Retorna una nueva cola vacía
 
 */
-Cola* crearCola(){
+Cola* crearCola(){     //O=1
     Cola* c = (Cola*)malloc( sizeof( struct Cola ) );
     c->primero = c->ultimo = NULL;
     c->len = 0;
@@ -30,7 +30,7 @@ Cola* crearCola(){
  *
 */
 
-void encolar_nodo(Nodo *nodo, Cola *c){
+void encolar_nodo(Nodo *nodo, Cola *c){ //O=1
     if( c == NULL ) return;
 
     // printf("Dato a encolar: %s\n", nodo->dato);
@@ -57,7 +57,7 @@ void encolar_nodo(Nodo *nodo, Cola *c){
  * @param *c: Cola a desencolar
  * @return data: Cadena que contenia el nodo desencolado
 */
-char *desencolar(Cola *c){
+char *desencolar(Cola *c){//O=1
     if( c->primero == NULL ) return "Cola vacia";
 
     Nodo* eliminado = c->primero;
@@ -90,7 +90,7 @@ char *desencolar(Cola *c){
  * @param *c: Cola a evaluar
  * @return: Verdadero o falso
 */
-bool cola_vacia(Cola *c){
+bool cola_vacia(Cola *c){ //O=1
     return c->len == 0;
 }
 
@@ -99,7 +99,7 @@ bool cola_vacia(Cola *c){
  * @param *c: Cola a mostrar
 */
 
-void mostrar(Cola *c){
+void mostrar(Cola *c){ //O=1
     if( c->primero == NULL ) return;
 
     printf("Primero: %s\nUltimo: %s\nLongitud: %d\n", c->primero->dato, c->ultimo->dato, c->len);
@@ -107,7 +107,7 @@ void mostrar(Cola *c){
     Nodo* actual = c->primero;
 
     printf("[");
-    while ( actual ){
+    while ( actual ){ //O=1
         printf(" %s ", actual->dato);
         actual = actual->sig;
     }
@@ -118,7 +118,7 @@ void mostrar(Cola *c){
 }
 
 
-void mostrar_postfija(Cola *c){
+void mostrar_postfija(Cola *c){ //O=1
     if( c->primero == NULL ) return;
 
     printf("\nNotación Postfija:\n");
@@ -126,7 +126,7 @@ void mostrar_postfija(Cola *c){
     Nodo *actual = c->primero;
 
     printf("[");
-    while (actual) {
+    while (actual) { //O=1
         printf(" %s ", actual->dato);
         actual = actual->sig;
     }
@@ -135,7 +135,7 @@ void mostrar_postfija(Cola *c){
 }
 
 
-void mostrar_infija(Cola *c){
+void mostrar_infija(Cola *c){  //O=1
     if( c->primero == NULL ) return;
 
     printf("\nNotación Infija:\n");
@@ -143,7 +143,7 @@ void mostrar_infija(Cola *c){
     Nodo *actual = c->primero;
 
     printf("[");
-    while (actual) {
+    while (actual) { //O=1
         printf(" %s ", actual->dato);
         actual = actual->sig;
     }
