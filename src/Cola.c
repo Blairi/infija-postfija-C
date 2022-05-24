@@ -99,7 +99,7 @@ bool cola_vacia(Cola *c){ //O=1
  * @param *c: Cola a mostrar
 */
 
-void mostrar(Cola *c){ //O=1
+void mostrar(Cola *c){ //O=n
     if( c->primero == NULL ) return;
 
     printf("Primero: %s\nUltimo: %s\nLongitud: %d\n", c->primero->dato, c->ultimo->dato, c->len);
@@ -107,7 +107,7 @@ void mostrar(Cola *c){ //O=1
     Nodo* actual = c->primero;
 
     printf("[");
-    while ( actual ){ //O=1
+    while ( actual ){ //O=n
         printf(" %s ", actual->dato);
         actual = actual->sig;
     }
@@ -118,7 +118,7 @@ void mostrar(Cola *c){ //O=1
 }
 
 
-void mostrar_postfija(Cola *c){ //O=1
+void mostrar_postfija(Cola *c){ //O=n
     if( c->primero == NULL ) return;
 
     printf("\nNotación Postfija:\n");
@@ -126,7 +126,7 @@ void mostrar_postfija(Cola *c){ //O=1
     Nodo *actual = c->primero;
 
     printf("[");
-    while (actual) { //O=1
+    while (actual) { //O=n
         printf(" %s ", actual->dato);
         actual = actual->sig;
     }
@@ -135,7 +135,7 @@ void mostrar_postfija(Cola *c){ //O=1
 }
 
 
-void mostrar_infija(Cola *c){  //O=1
+void mostrar_infija(Cola *c){  //O=n
     if( c->primero == NULL ) return;
 
     printf("\nNotación Infija:\n");
@@ -143,7 +143,7 @@ void mostrar_infija(Cola *c){  //O=1
     Nodo *actual = c->primero;
 
     printf("[");
-    while (actual) { //O=1
+    while (actual) { //O=n
         printf(" %s ", actual->dato);
         actual = actual->sig;
     }
