@@ -1,7 +1,20 @@
 #include "../include/Pila.h"
-
 #include "../include/NodoPila.h"
 
+/*
+
+@author: Marín Montaño Josué 
+@date:   19/may/2022
+@brief:  Implementación de funciones para Pila
+
+*/
+
+/*
+
+@brief: Crea una cola y le asigna un espacio en memoria
+@return: Retorna una nueva pila vacía
+
+*/
 Pila *crearPila(){
     Pila *p = (Pila*)malloc( sizeof( struct Pila ) );
 
@@ -10,6 +23,11 @@ Pila *crearPila(){
     return p;
 }
 
+/*
+ * @brief: Apila un nodo siguiendo las reglas de la estructura Pila
+ * @param *nodo: Nodo a apilar
+ * @param *p: Pila para apilar el nodo
+*/
 
 void apilar_nodo(NodoPila *nodo, Pila *p){
 
@@ -30,6 +48,11 @@ void apilar_nodo(NodoPila *nodo, Pila *p){
 
 }
 
+/*
+ * @brief: Desapila por arriba retornando la información del nodo desapilado
+ * @param *p: Pila a desapilar
+ * @return data: Cadena del nodo desapilado
+*/
 
 char *desapilar(Pila *p){
     if( p->fondo == NULL ) return NULL;
@@ -54,11 +77,20 @@ char *desapilar(Pila *p){
 
 }
 
+/*
+ * @brief: Evalua la pila comprobando por su longitud
+ * @param *p: Pila a evaluar
+ * @return: Verdadero o falso
+*/
 
 bool esvacia(Pila *p){
     return p->len == 0;
 }
 
+/*
+ * @brief: Funcion para mostrar el estado de la pila
+ * @param *p: Pila a mostar
+*/
 
 void mostrarPila(Pila *p){
     if( p->fondo == NULL ) return;

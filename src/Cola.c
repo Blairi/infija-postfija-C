@@ -1,6 +1,20 @@
 #include "../include/Cola.h"
 #include <stdio.h>
 
+/*
+
+@author: Ruiz Sánchez Yael Nacxit
+@date:   19/may/2022
+@brief:  Implementación de funciones para cola
+
+*/
+
+/*
+
+@brief: Crea una cola y le asigna un espacio en memoria
+@return: Retorna una nueva cola vacía
+
+*/
 Cola* crearCola(){
     Cola* c = (Cola*)malloc( sizeof( struct Cola ) );
     c->primero = c->ultimo = NULL;
@@ -8,6 +22,13 @@ Cola* crearCola(){
     return c;
 }
 
+/*
+ *
+ * @brief: Encola un nodo de acuerdo a las reglas de una cola y aumentando su longitud
+ * @param *nodo: Nodo a encolar
+ * @param *c: Cola donde se encolara el nodo
+ *
+*/
 
 void encolar_nodo(Nodo *nodo, Cola *c){
     if( c == NULL ) return;
@@ -31,27 +52,11 @@ void encolar_nodo(Nodo *nodo, Cola *c){
 
 }
 
-
-void encolar(char *data, Cola* c){
-    
-    if( c == NULL ) return;
-
-    if( c->primero == NULL ){
-
-        Nodo *nuevo_nodo = crearNodo( data, NULL, NULL );
-        c->primero = c->ultimo = nuevo_nodo;
-
-        return;
-    }
-
-    Nodo *nuevo_nodo = crearNodo( data, NULL, c->primero );
-    c->primero->prev = nuevo_nodo;
-    c->primero = nuevo_nodo;
-
-    return;
-}
-
-
+/*
+ * @brief: Desencola una cola retornando la información de lo que desencola y disminuye su longitud
+ * @param *c: Cola a desencolar
+ * @return data: Cadena que contenia el nodo desencolado
+*/
 char *desencolar(Cola *c){
     if( c->primero == NULL ) return "Cola vacia";
 
@@ -80,10 +85,19 @@ char *desencolar(Cola *c){
     return data;
 }
 
-
+/*
+ * @brief: Comprueba si la cola está vacía según su longitud
+ * @param *c: Cola a evaluar
+ * @return: Verdadero o falso
+*/
 bool cola_vacia(Cola *c){
     return c->len == 0;
 }
+
+/*
+ * @brief: Funciones para imprimir colas
+ * @param *c: Cola a mostrar
+*/
 
 void mostrar(Cola *c){
     if( c->primero == NULL ) return;

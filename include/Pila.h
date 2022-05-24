@@ -3,11 +3,17 @@
 
 #include <stdio.h>
 #include <string.h>
-#include <limits.h>
 #include <stdlib.h>
 #include <stdbool.h>
 #include "NodoPila.h"
 
+/*
+
+@author: Marín Montaño Josué 
+@date:   19/may/2022
+@brief:  Estructura de Pila
+
+*/
 typedef struct Pila
 {
     struct NodoPila *cima, *fondo;

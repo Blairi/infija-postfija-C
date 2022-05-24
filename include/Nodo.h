@@ -2,7 +2,13 @@
 #define __NODO_H_
 
 #include <stdio.h>
+/*
 
+@author Nava Torres Gabriela
+@date 17/may/2022
+@brief Estructura de Nodo para Cola
+
+*/
 typedef struct Nodo
 {
     char* dato;

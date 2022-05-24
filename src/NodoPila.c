@@ -1,6 +1,15 @@
 #include <stdlib.h>
-#include "NodoPila.h"
+#include "../include/NodoPila.h"
 
+/*
+
+@author:      Nava Torres Gabriela
+@date:        17/amy/2022
+@brief:       Se encarga de crear un nodo para agregarlo una Pila
+@param *data: Cadena a asignar para el nodo
+@return nuevoNodo: Retorna un nuevo nodo con la información 
+
+*/
 NodoPila *crearNodoPila(char *data){
 
     NodoPila *nuevoNodo = (NodoPila*)malloc( sizeof( struct NodoPila ) );

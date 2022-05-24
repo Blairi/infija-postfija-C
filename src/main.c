@@ -1,7 +1,5 @@
 // https://docs.google.com/document/d/14msJ7g8jASsBlfn3TLur918ZqKfavk9p-cgDtChMr0o/edit
-// https://www.youtube.com/watch?v=5zhXm3J9xdE
 
-#include <linux/limits.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -13,8 +11,7 @@
 #include "../include/Pila.h"
 #include "../include/NodoPila.h"
 
-void probarColaDL();
-void probarPila();
+void postfija();
 int presedencia(char *caracter);
 bool esOperador(char *caracter);
 
@@ -22,98 +19,69 @@ int main(){
 
 	system("clear");
 
-	probarColaDL();
-	//probarPila();
-	
+	postfija();
 
 	return (0);
 }
 
-void probarPila(){
-	Pila *pila = crearPila();
-	NodoPila *nodo1 = crearNodoPila("fondo");
-	NodoPila *nodo2 = crearNodoPila("medio");
-	NodoPila *nodo3 = crearNodoPila("cima");
-
-	apilar_nodo(nodo1, pila);
-	apilar_nodo(nodo2, pila);
-	apilar_nodo(nodo3, pila);
-
-	mostrarPila(pila);
-
-	desapilar(pila);
-	desapilar(pila);
-	desapilar(pila);
-
-	mostrarPila(pila);
-	
-	if( esvacia(pila) ){
-		printf("es vacia\n");
-	}
-
-}
-
-void probarColaDL(){
+/*
+ * @authors: Montiel Aviles Axel Fernando
+ *           Lopez Lopez Axel Dion
+ * @date: 21/may/2022
+ * @brief: Función para convertir expresión infija o postfija
+*/
+void postfija(){
 	typedef char cadenaCaracteres[12];
 	cadenaCaracteres caracteres[100];
 
+	// Creamos una cola para insertar cada elemento de la operación
 	Cola *cola = crearCola();
 
 	int len;
-	printf("¿Cuantos elementos tiene tu operacion? ");
+	printf("¿Cuántos elementos tiene tu operación? ");
 	scanf("%d", &len); 
 	
+	// Iteramos segun la cantidad de elementos 
 	for (int i = 0; i < len; i++){
 
 		printf("Ingresa el elemento %d: ", i + 1);
 		scanf("%s", caracteres[i]);
-		
+
+		// Creamos un nodo con la información que ingresa el usuario y lo encolamos a la cola
 		Nodo *nodo = crearNodo(caracteres[i], NULL, NULL);
-		
 		encolar_nodo(nodo, cola);
-	} 
+	}
 
-	/* Nodo *n1 = crearNodo("(", NULL, NULL); */
-	/* Nodo *n2 = crearNodo("6", NULL, NULL); */
-	/* Nodo *n3 = crearNodo("+", NULL, NULL); */
-	/* Nodo *n4 = crearNodo("2", NULL, NULL); */
-	/* Nodo *n5 = crearNodo(")", NULL, NULL); */
-	/* Nodo *n6 = crearNodo("*", NULL, NULL); */
-	/* Nodo *n7 = crearNodo("3", NULL, NULL); */
-	/* Nodo *n8 = crearNodo("/", NULL, NULL); */
-	/* Nodo *n9 = crearNodo("2", NULL, NULL); */
-	/* Nodo *n10 = crearNodo("^", NULL, NULL); */
-	/* Nodo *n11 = crearNodo("2", NULL, NULL); */
-	/* Nodo *n12 = crearNodo("-", NULL, NULL); */
-	/* Nodo *n13 = crearNodo("4", NULL, NULL); */
-	/* encolar_nodo(n1, cola); */
-	/* encolar_nodo(n2, cola); */
-	/* encolar_nodo(n3, cola); */
-	/* encolar_nodo(n4, cola); */
-	/* encolar_nodo(n5, cola); */
-	/* encolar_nodo(n6, cola); */
-	/* encolar_nodo(n7, cola); */
-	/* encolar_nodo(n8, cola); */
-	/* encolar_nodo(n9, cola); */
-	/* encolar_nodo(n10, cola); */
-	/* encolar_nodo(n11, cola); */
-	/* encolar_nodo(n12, cola); */
-	/* encolar_nodo(n13, cola); */
 	mostrar_infija(cola);
-
+	
+	/*
+	 * Creamos una nueva cola donde guardaremos cada elemento de la nueva expresión postfija
+	 * y una pila para ir guardando los operadores
+	*/
 	Cola *cola_postfija = crearCola();
 	Pila *pila = crearPila();
-	
+
+	// Hacemos uso de apuntadores para poder comparar en cada interación
 	char *parentesis_izq = "(";
 	char *parentesis_der = ")";
 
 	char *operador;
 
+	/*
+	 * En esta parte iteramos según la cantidad de elementos que existan
+	*/
 	for (int i = 0; i < len; i++){
-
+		
+		// La función desencolar nos retorna la información del primer elemento y a su vez lo elimina de la cola
 		char *actual = desencolar(cola);
+
 		if( esOperador( actual ) ){
 			
+			/* Aqui comprobamos que la pila no este vacia, que el operador que esta en la cima
+			 * de la pila no sea "(" y además comprobamos la presedencia del operador.
+			 * Si todas estas condiciones las cumple, creamos un nodo para agregarlo a la cola
+			 * y eliminamos la cima de la pila hasta que dejen de ser verdaderas.
+			*/ 
 			while( !esvacia(pila) && 
 					   strcmp(operador = pila->cima->dato, parentesis_izq) != 0 &&
 						 presedencia(actual) <= presedencia(operador)){
@@ -124,18 +92,23 @@ void probarColaDL(){
 
 			}
 
+			// Si las condiciones del while no se cumplieron apilamos el nuevo operador
 			NodoPila *nodoPila = crearNodoPila(actual);
 			apilar_nodo(nodoPila, pila);
 
 		}
-
+		
+		// Si no es operador, comprobamos si es un "(" para apilarlo
 		else if( strcmp(actual, parentesis_izq) == 0 ){
 			NodoPila *nodoPila = crearNodoPila(actual);
 			apilar_nodo(nodoPila, pila);
 		}
 		
+		// Si no es "(", comprobamos si es un ")" para desapilar todos los operadores
 		else if( strcmp(actual, parentesis_der) == 0 ){
 			
+			// Aqui iteramos desapilando cada elemento y encolandolo a la cola postfija
+			// hasta encontrar el "(" que le corresponde
 			while( strcmp(operador = pila->cima->dato, parentesis_izq) != 0 ){
 				Nodo *nodoCola = crearNodo(operador, NULL, NULL);
 				encolar_nodo(nodoCola, cola_postfija);
@@ -144,15 +117,20 @@ void probarColaDL(){
 
 		}
 
+		// Si no se cumplio ninguna condición anterior significa que el elemento
+		// es un número, así que lo encolamos
 		else{
 			Nodo *nodoCola = crearNodo(actual, NULL, NULL);
 			encolar_nodo(nodoCola, cola_postfija);
 		}
 
 	}
-
+	
+	// Al acabar la iteración, desapilamos todos los operadores que falten
+	// para agregarlos a la cola postfija
 	while (!esvacia(pila)) {
 		
+		// Aqui ignoramos el "(" ya que no es parte de la notación
 		if( strcmp(pila->cima->dato, parentesis_izq) != 0 ){
 			Nodo *nodoCola = crearNodo(pila->cima->dato, NULL, NULL);
 			encolar_nodo(nodoCola, cola_postfija);
@@ -161,17 +139,31 @@ void probarColaDL(){
 		desapilar(pila);
 	}
 
+	// Finalmente mostramos el resultado
 	mostrar_postfija(cola_postfija);
 	mostrarPila(pila);
 	
 }
 
-
+/*
+ * @author: Montiel Aviles Axel Fernando
+ * @date: 21/may/2022
+ * @brief: Comprobamos si el caracter es un operador
+ * @param *caracter: Cadena a evaluar
+ * @return: Falso o Verdadero
+*/
 
 bool esOperador(char *caracter){
 	return presedencia(caracter) != 0;
 }
 
+/*
+ * @author: Montiel Aviles Axel Fernando
+ * @date: 21/may/2022
+ * @brief: Evaluamos la presedencia de un operador según las reglas de la notación postfija
+ * @param *caracter: Operador a evaluar
+ * @return int: Retorna un entero de 0 a 3 según su prioridad
+*/
 
 int presedencia(char *caracter){
 

@@ -3,10 +3,17 @@
 
 #include <stdio.h>
 #include <string.h>
-#include <limits.h>
 #include <stdlib.h>
 #include <stdbool.h>
 #include "Nodo.h"
+
+/*
+
+@author: Ruiz Sánchez Yael Nacxit
+@date:   19/may/2022
+@brief:  Estructra de cola
+
+*/
 
 typedef struct Cola
 {
@@ -15,7 +22,6 @@ typedef struct Cola
 } Cola;
 
 Cola* crearCola();
-void encolar (char *data, Cola* c);
 void encolar_nodo(Nodo *nodo, Cola *c);
 char* desencolar(Cola *c);
 void mostrar(Cola *c);
