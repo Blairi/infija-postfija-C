@@ -15,7 +15,7 @@
 @return: Retorna una nueva pila vacía
 
 */
-Pila *crearPila(){
+Pila *crearPila(){ //O=1
     Pila *p = (Pila*)malloc( sizeof( struct Pila ) );
 
     p->cima = p->fondo = NULL;
@@ -29,7 +29,7 @@ Pila *crearPila(){
  * @param *p: Pila para apilar el nodo
 */
 
-void apilar_nodo(NodoPila *nodo, Pila *p){
+void apilar_nodo(NodoPila *nodo, Pila *p){ //O=1
 
     if( p == NULL ) return;
 
@@ -54,7 +54,7 @@ void apilar_nodo(NodoPila *nodo, Pila *p){
  * @return data: Cadena del nodo desapilado
 */
 
-char *desapilar(Pila *p){
+char *desapilar(Pila *p){ //O=1
     if( p->fondo == NULL ) return NULL;
 
     NodoPila *eliminado = p->cima;
@@ -83,7 +83,7 @@ char *desapilar(Pila *p){
  * @return: Verdadero o falso
 */
 
-bool esvacia(Pila *p){
+bool esvacia(Pila *p){ //O=1
     return p->len == 0;
 }
 
@@ -92,14 +92,14 @@ bool esvacia(Pila *p){
  * @param *p: Pila a mostar
 */
 
-void mostrarPila(Pila *p){
+void mostrarPila(Pila *p){ O=n
     if( p->fondo == NULL ) return;
 
     printf("Cima: %s\nFondo: %s\nLongitud: %d\n", p->cima->dato, p->fondo->dato, p->len);
 
     NodoPila *actual = p->cima;
 
-    while( actual ){
+    while( actual ){ //O=n
         printf("| %s |\n", actual->dato);
         actual = actual->sig;
     }
