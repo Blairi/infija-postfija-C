@@ -15,11 +15,11 @@ void postfija();
 int presedencia(char *caracter);
 bool esOperador(char *caracter);
 
-int main(){
+int main(){//O=n^2
 
 	system("clear");
 
-	postfija();
+	postfija();//O=n^2
 
 	return (0);
 }
@@ -30,7 +30,7 @@ int main(){
  * @date: 21/may/2022
  * @brief: Función para convertir expresión infija o postfija
 */
-void postfija(){
+void postfija(){//O=n^2
 	typedef char cadenaCaracteres[12];
 	cadenaCaracteres caracteres[100];
 
@@ -42,7 +42,7 @@ void postfija(){
 	scanf("%d", &len); 
 	
 	// Iteramos segun la cantidad de elementos 
-	for (int i = 0; i < len; i++){
+	for (int i = 0; i < len; i++){//O=n
 
 		printf("Ingresa el elemento %d: ", i + 1);
 		scanf("%s", caracteres[i]);
@@ -52,7 +52,7 @@ void postfija(){
 		encolar_nodo(nodo, cola);
 	}
 
-	mostrar_infija(cola);
+	mostrar_infija(cola);//O=n
 	
 	/*
 	 * Creamos una nueva cola donde guardaremos cada elemento de la nueva expresión postfija
@@ -70,7 +70,7 @@ void postfija(){
 	/*
 	 * En esta parte iteramos según la cantidad de elementos que existan
 	*/
-	for (int i = 0; i < len; i++){
+	for (int i = 0; i < len; i++){//O=n*n
 		
 		// La función desencolar nos retorna la información del primer elemento y a su vez lo elimina de la cola
 		char *actual = desencolar(cola);
@@ -82,9 +82,9 @@ void postfija(){
 			 * Si todas estas condiciones las cumple, creamos un nodo para agregarlo a la cola
 			 * y eliminamos la cima de la pila hasta que dejen de ser verdaderas.
 			*/ 
-			while( !esvacia(pila) && 
+			while( !esvacia(pila) && //O=n
 					   strcmp(operador = pila->cima->dato, parentesis_izq) != 0 &&
-						 presedencia(actual) <= presedencia(operador)){
+						 presedencia(actual) <= presedencia(operador)){ //
 				
 				Nodo *nodoCola = crearNodo(operador, NULL, NULL);
 				encolar_nodo(nodoCola, cola_postfija);
@@ -109,7 +109,7 @@ void postfija(){
 			
 			// Aqui iteramos desapilando cada elemento y encolandolo a la cola postfija
 			// hasta encontrar el "(" que le corresponde
-			while( strcmp(operador = pila->cima->dato, parentesis_izq) != 0 ){
+			while( strcmp(operador = pila->cima->dato, parentesis_izq) != 0 ){//O=n
 				Nodo *nodoCola = crearNodo(operador, NULL, NULL);
 				encolar_nodo(nodoCola, cola_postfija);
 				desapilar(pila);
@@ -128,7 +128,7 @@ void postfija(){
 	
 	// Al acabar la iteración, desapilamos todos los operadores que falten
 	// para agregarlos a la cola postfija
-	while (!esvacia(pila)) {
+	while (!esvacia(pila)) {//O=n
 		
 		// Aqui ignoramos el "(" ya que no es parte de la notación
 		if( strcmp(pila->cima->dato, parentesis_izq) != 0 ){
@@ -140,8 +140,8 @@ void postfija(){
 	}
 
 	// Finalmente mostramos el resultado
-	mostrar_postfija(cola_postfija);
-	mostrarPila(pila);
+	mostrar_postfija(cola_postfija);//O=n
+	mostrarPila(pila);//O=n
 	
 }
 
@@ -153,7 +153,7 @@ void postfija(){
  * @return: Falso o Verdadero
 */
 
-bool esOperador(char *caracter){
+bool esOperador(char *caracter){//O=1
 	return presedencia(caracter) != 0;
 }
 
@@ -165,7 +165,7 @@ bool esOperador(char *caracter){
  * @return int: Retorna un entero de 0 a 3 según su prioridad
 */
 
-int presedencia(char *caracter){
+int presedencia(char *caracter){//O=1
 
 	char *potencia = "^";
 	char *multiplicacion = "*";
